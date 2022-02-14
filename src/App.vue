@@ -1,21 +1,32 @@
 <template>
   <div id="app">
-    <h1>Registrar Reclamação</h1>
     <div class="conteudo">
       <form class="painel" v-if="!enviado">
-        <div class="cabecalho">Formulário</div>
+        <h1>
+          <i class="fa-solid fa-circle-user"></i><br />
+          Registrar Reclamação
+        </h1>
+        <Rotulo nome="Nome">
+          <input type="text" v-model="usuario.nome" placeholder="Nome" />
+          <span class="icon-form"><i class="fa-solid fa-user"></i></span>
+        </Rotulo>
         <Rotulo nome="E-mail">
-          <!-- lazy atualiza quando perde o foco do componente -->
-          <!-- trim tira os espaços em branco das duas pontas -->
-
-          <input type="text" v-model.lazy.trim="usuario.email" />
+          <input
+            type="text"
+            v-model.lazy.trim="usuario.email"
+            placeholder="E-mail"
+          />
         </Rotulo>
         <Rotulo nome="Senha">
           <input type="password" v-model="usuario.senha" />
         </Rotulo>
         <Rotulo nome="Idade">
           <!-- number só vai permitir valores number -->
-          <input type="number" v-model.number="usuario.idade" />
+          <input
+            type="number"
+            v-model.number="usuario.idade"
+            placeholder="Idade"
+          />
         </Rotulo>
         <Rotulo nome="Mensagem">
           <textarea name="" cols="30" rows="5" v-model="mensagem"></textarea>
@@ -70,6 +81,9 @@
       </form>
       <div class="painel" v-else>
         <div class="cabecalho">Resultado</div>
+        <Rotulo nome="Nome">
+          <span>{{ usuario.nome }}</span>
+        </Rotulo>
         <Rotulo nome="E-mail">
           <span>{{ usuario.email }}</span>
         </Rotulo>
@@ -111,9 +125,9 @@ export default {
   name: "app",
   components: { Rotulo, Escolha },
   methods: {
-	  enviar(){
-		  this.enviado = true
-	  }
+    enviar() {
+      this.enviado = true;
+    },
   },
   data() {
     return {
@@ -127,25 +141,23 @@ export default {
         { codigo: 3, nome: "alta" },
       ],
       usuario: {
+        nome: "",
         email: "",
         senha: "",
         idade: 25,
       },
       escolha: true,
-	  enviado: false,
+      enviado: false,
     };
   },
-  // created(){
-  // 	setTimeout(() => {
-  // 		this.email = ''
-  // 	}, 5000)
-  // }
 };
 </script>
 
 <style>
 body {
   background-color: #ececec;
+  display: grid;
+  grid-template-columns: repeat(12, 8.33%);
 }
 
 #app {
@@ -154,22 +166,44 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
-  display: flex;
-  flex-direction: column;
+  grid-column-start: 5;
+  grid-column-end: 9;
 }
-
+.icon-form {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 .conteudo {
-  display: flex;
 }
-
+label {
+  color: #fff;
+  font-size: 12px;
+}
 .painel {
-  flex: 1;
-  background: #fff;
-  margin: 0px 10px;
-  padding: 20px;
-  border: 1px solid #aaa;
-  border-radius: 5px;
+  border-radius: 3px;
+  padding: 1em 2em;
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
 }
 
 .painel .cabecalho {
@@ -194,9 +228,6 @@ body {
   font-weight: 200;
   margin: 20px;
   padding: 0;
-}
-
-.mr-4 {
-  margin-right: 40px;
+  color: #fff;
 }
 </style>
